@@ -1,0 +1,43 @@
+services:
+  database_devops_app:
+    image: postgres
+    container_name: database_devops_app
+    restart: always
+    ports:
+      - 1234:5432
+    env_file:
+      - ./back-end/.env
+    volumes:
+      - database:/var/lib/postgresql/data
+
+  node_devops_app:
+    container_name: node_devops_app
+    build: ./back-end/
+    ports:
+      - 5000:5000
+    depends_on:
+      - database_devops_app
+    env_file:
+      - back-end/.env
+
+  react_devops_app:
+    container_name: react_devops_app
+    build: ./front-end
+    volumes:
+      - build_react:/var/www/html
+
+  nginx_devops_app:
+    container_name: nginx_devops_app
+    build: ./nginx
+    ports:
+      - 8080:80
+    volumes:
+      - build_react:/var/www/html
+    depends_on:
+      - database_devops_app
+      - node_devops_app
+      - react_devops_app
+
+volumes:
+  database:
+  build_react:
