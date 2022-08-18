@@ -1,5 +1,5 @@
 services:
-  #database error
+
   database_devops_app:
     image: postgres
     container_name: database_devops_app
