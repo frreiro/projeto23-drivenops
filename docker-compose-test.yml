@@ -6,7 +6,7 @@ services:
     ports:
       - 1234:5432
     env_file:
-      - ./back-end/.env
+      - ./back-end/.env.test
     volumes:
       - database:/var/lib/postgresql/data
 
@@ -18,7 +18,7 @@ services:
     depends_on:
       - database_devops_app
     env_file:
-      - back-end/.env
+      - back-end/.env.test
 
 volumes:
   database:
